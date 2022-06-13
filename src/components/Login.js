@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -16,27 +17,27 @@ export default class login extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault()
-    
+    axios.get('http://localhost:8080/vente-terrain/login.action').then(() => console.log('success')).catch(() => console.log('cannot get elements'))
   }
 
   handleUsernameChange = event => {
     const form = this.state.form
     form.username = event.currentTarget.value
-    this.setState({form})
+    this.setState({ form })
     this.updateFormState()
   }
 
   handlePasswordChange = event => {
     const form = this.state.form
     form.password = event.currentTarget.value
-    this.setState({form})
+    this.setState({ form })
     this.updateFormState()
   }
 
   handleRememberMeChange = event => {
     const form = this.state.form
     form.rememberMe = event.currentTarget.checked
-    this.setState({form})
+    this.setState({ form })
   }
 
   updateFormState = () => {

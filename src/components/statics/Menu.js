@@ -16,7 +16,7 @@ export default class Menu extends Component {
       <nav className="main-header navbar navbar-expand-md navbar-light navbar-white">
         <div className="container">
           <Link to="/application/accueil" className="navbar-brand">
-            <img src="assets/images/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{opacity: '0.8'}} />
+            <img src="assets/images/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '0.8' }} />
             <span className="brand-text font-weight-light">GreenFIELD</span>
           </Link>
 
@@ -36,7 +36,7 @@ export default class Menu extends Component {
                 <NavLink to="/application/terrain" className="nav-link"> Terrain</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="application/vente" className="nav-link"> Vente</NavLink>
+                <NavLink to="/application/vente" className="nav-link"> Vente</NavLink>
               </li>
             </ul>
 
@@ -44,12 +44,12 @@ export default class Menu extends Component {
             <ul className="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
               <li className="nav-item dropdown user-menu">
                 <a href="!#" className="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                  <img src={`${BACK_CLIENT_IMAGE_URL}/${this.state.connectedUser && this.state.connectedUser.photo}`} className="user-image img-circle elevation-2" alt="Connected  user image" />
+                  <img src={`${BACK_CLIENT_IMAGE_URL}/${this.state.connectedUser && this.state.connectedUser.photo}`} className="user-image img-circle elevation-2" alt="Connected user" />
                   <span className="d-none d-md-inline">{this.state.connectedUser && this.state.connectedUser.username}</span>
                 </a>
                 <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                   <li className="user-header bg-lightblue">
-                    <img src={`${BACK_CLIENT_IMAGE_URL}/${this.state.connectedUser && this.state.connectedUser.photo}`} className="img-circle elevation-2" alt="Utilisateur Image" />
+                    <img src={`${BACK_CLIENT_IMAGE_URL}/${this.state.connectedUser && this.state.connectedUser.photo}`} className="img-circle elevation-2" alt="Connected user" />
                     <p>
                       {`${this.state.connectedUser && this.state.connectedUser.username} - ${this.state.connectedUser && this.state.connectedUser.mailAddress}`}
                     </p>

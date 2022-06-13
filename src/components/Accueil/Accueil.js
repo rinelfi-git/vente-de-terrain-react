@@ -69,7 +69,7 @@ export default class Accueil extends Component {
                       </div>
                     </div>
                     <div className="card-body">
-                      <div className="chart" style="height: 250px; min-width: 488px;width: 100%">
+                      <div className="chart" style={{height: '250px', minWidth: '488px', width: '100%'}}>
                       </div>
                     </div>
                   </div>

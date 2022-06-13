@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Accueil from './Accueil/Accueil'
+import Menu from './statics/Menu'
 
 export default class UserSpace extends Component {
   render() {
     return (
-      <div className="">
-        <div className="layout-top-nav">
-          <div className="wrapper">
-            <BrowserRouter>
-              <Route path="/accueil" component={Accueil}/>
-            </BrowserRouter>
-          </div>
+      <div className="layout-top-nav">
+        <div className="wrapper">
+          <Menu />
+          <Route path="/application/accueil" component={Accueil} />
         </div>
       </div>
     )

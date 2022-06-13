@@ -1,16 +1,19 @@
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Login from './components/Login'
 import UserSpace from './components/UserSpace'
 import './assets/css/fontawesome.css'
 import './assets/css/material-icons.css'
 import './assets/css/icheck-bootstrap.min.css'
 import './assets/css/adminlte.min.css'
+import './index.css'
 
 function App() {
   return (
     <BrowserRouter>
-      <Route strict={true} path="/" component={Login} />
-      <Route path="/application/" component={UserSpace} />
+      <Switch>
+        <Route path="/application" component={UserSpace} />
+        <Route strict={true} path="/" component={Login} />
+      </Switch>
     </BrowserRouter>
   );
 }
