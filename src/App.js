@@ -4,8 +4,9 @@ import UserSpace from './components/UserSpace'
 import './assets/css/fontawesome.css'
 import './assets/css/material-icons.css'
 import './assets/css/icheck-bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/adminlte.min.css'
-import './index.css'
+import './assets/css/main.css'
 
 function App() {
   return (

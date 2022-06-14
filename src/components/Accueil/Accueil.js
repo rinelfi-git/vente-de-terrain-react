@@ -1,6 +1,5 @@
 import { Component } from "react"
 import { Link } from "react-router-dom"
-import Client from "./Client"
 import Field from "./Field"
 
 export default class Accueil extends Component {
@@ -36,7 +35,6 @@ export default class Accueil extends Component {
                   </div>
                 </div>
               </div>
-              <div className="clearfix hidden-md-up"></div>
               <div className="col-12 col-sm-6 col-md-4">
                 <div className="info-box mb-3">
                   <span className="info-box-icon bg-lightblue elevation-1"><i className="fas fa-shopping-cart"></i></span>
@@ -114,7 +112,9 @@ export default class Accueil extends Component {
                   </div>
                   <div className="card-body p-0">
                     <ul className="users-list clearfix">
-                      {this.state.clients.map((client, key) => <Client key={key} photo={client.photo} firstName={client.firstName} lastName={client.lastName} />)}
+                      {
+                        //this.state.clients.map((client, key) => <Client key={key} photo={client.photo} firstName={client.firstName} lastName={client.lastName} />)
+                      }
                     </ul>
                   </div>
                   <div className="card-footer text-center">
