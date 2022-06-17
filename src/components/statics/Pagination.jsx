@@ -1,8 +1,12 @@
-export default function Pagination({source, range, on_page_update }) {
-    function range(min, max) {
-        const range = [];
-        for (let i = min; i <= max; i++) range.push(i);
-        return range;
+import { useState } from "react";
+
+export default function Pagination({source, range: rage_from, on_page_update }) {
+    const [current, set_current] = useState(1);
+    const [end, set_end] = useState(5);
+    function range_from(min, max) {
+        const range_from = [];
+        for (let i = min; i <= max; i++) range_from.push(i);
+        return range_from;
     }
 
     function handle_navigation_to(target) {
@@ -18,7 +22,7 @@ export default function Pagination({source, range, on_page_update }) {
                     <span className="material-icons md-18">chevron_left</span>
                 </button>
             </li>
-            {range(start, end).map(pagination => (
+            {range_from(1, end).map(pagination => (
                 <li key={pagination} className={`page-item${pagination === current && ' active'}`}>
                     <button className="page-link" onClick={() => handle_navigation_to(pagination)}>{pagination}</button>
                 </li>

@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import ClientCard from "./Card";
 import ConfirmDeleteClient from "./ConfirmDelete";
 import InsertClient from "./Insert";
-import Pagination from "./Pagination";
+import Pagination from "../statics/Pagination";
 import SearchCriteria from "./SearchCriteria";
 import UpdateClient from "./Update";
 import UpdateProfileImage from "./UpdateProfileImage";
@@ -12,7 +12,10 @@ export default class Client extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            insert_modal_shown: false,
+            modal_shown: {
+                insert: false,
+                update: false,
+            },
             clients: [
                 {
                     "adresse": {
@@ -34,12 +37,25 @@ export default class Client extends Component {
         };
     }
 
-    handle_show_client = () => {
-        this.setState(state => ({insert_modal_shown: !state.insert_modal_shown}));
+    handle_open_insert_modal = () => {
+        const {modal_shown} = this.state;
+        modal_shown['insert'] = true;
+        this.setState({modal_shown});
+    }
+
+    open_update_modal = () => {
+        const {modal_shown} = this.state;
+        modal_shown['update'] = true;
+        this.setState({modal_shown});
+    }
+
+    handle_close_modal = scope => {
+        const {modal_shown} = this.state;
+        modal_shown[scope] = false;
+        this.setState({modal_shown});
     }
 
     update_view = page => {
-        
     }
 
     render() {
@@ -53,7 +69,7 @@ export default class Client extends Component {
                             </div>
                             <div className="col-sm-6">
                                 <div className="float-sm-right">
-                                    <Button variant="primary" onClick={this.handle_show_client}>
+                                    <Button variant="primary" onClick={this.handle_open_insert_modal}>
                                         <span className="material-icons">add</span> Nouveau
                                     </Button>
                                 </div>
@@ -63,15 +79,15 @@ export default class Client extends Component {
                 </div>
 
                 <SearchCriteria />
-                <InsertClient modal_shown={this.state.insert_modal_shown} on_toggle_modal={this.handle_show_client} />
-                <UpdateClient />
+                <InsertClient modal_shown={this.state.modal_shown['insert']} on_hide_modal={() => this.handle_close_modal('insert')} />
+                <UpdateClient modal_shown={this.state.modal_shown['update']} on_hide_modal={() => this.handle_close_modal('update')}  />
                 <ConfirmDeleteClient />
                 <UpdateProfileImage />
 
                 <div className="content">
                     <div className="container">
                         <div className="row">
-                            {this.state.clients.map((client, index) => <ClientCard client={client} key={index} />)}
+                            {this.state.clients.map((client, index) => <ClientCard client={client} key={index} on_open_update_modal={this.open_update_modal} />)}
                         </div>
                         <div className="row">
                             <div className="col-12">

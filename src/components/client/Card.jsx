@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 
-export default function ClientCard({ client }) {
+export default function ClientCard({ client, on_open_update_modal }) {
     const [hovered, set_hovered] = useState(false);
-    function handle_overlay_hovered() {
-
-    }
     return (
         <div className="w-100 col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
             <div className="card bg-white card-lightblue card-outline w-100">
@@ -23,7 +20,7 @@ export default function ClientCard({ client }) {
                             <img src={`http://localhost:5000/uploads/images/clients${client.photo}`} alt={client.nom} className="img-circle img-fluid" style={{ background: '#0069d9' }} />
                             <div className="custom-class-image-edit-overlay custom-class-image-edit-overlay-background"></div>
                             <i className="fa fa-camera fa-2x text-white custom-class-icon-edit-overlay"></i>
-                            <div className="custom-class-image-edit-overlay custom-class-image-edit-overlay-foreground" data-toggle="modal" onMouseOver={handle_overlay_hovered}></div>
+                            <div className="custom-class-image-edit-overlay custom-class-image-edit-overlay-foreground" data-toggle="modal"></div>
                         </div>
                     </div>
                 </div>
@@ -34,7 +31,7 @@ export default function ClientCard({ client }) {
                                 action
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href="#!"><span className="material-icons">update</span> modifier</Dropdown.Item>
+                                <Dropdown.Item href="#!" onClick={on_open_update_modal}><span className="material-icons">update</span> modifier</Dropdown.Item>
                                 <Dropdown.Item href="#!"><span className="material-icons">delete_forever</span> supprimer</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>

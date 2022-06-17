@@ -1,10 +1,10 @@
 import { Button, Modal } from "react-bootstrap";
 
-export default function InsertClient ({modal_shown, on_hide_modal}) {
+export default function InsertTerrain ({modal_shown, on_hide_modal}) {
     return (
         <Modal show={modal_shown} onHide={on_hide_modal}>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Nouveau terrain</Modal.Title>
             </Modal.Header>
             <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
             <Modal.Footer>
