@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 
 export default function ClientCard({ client, on_open_update_modal }) {
-    const [hovered, set_hovered] = useState(false);
     return (
         <div className="w-100 col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
             <div className="card bg-white card-lightblue card-outline w-100">
@@ -13,7 +11,7 @@ export default function ClientCard({ client, on_open_update_modal }) {
                             <ul className="ml-4 mb-0 fa-ul text-muted">
                                 <li className="small"><span className="fa-li"><span className="material-icons">contacts</span></span><b>CIN</b>:<br />{client.cin}</li>
                                 {typeof client.adresse !== 'undefined' ? <li className="small"><span className="fa-li"><span className="material-icons">place</span></span><b>Adresse</b>:<br />{client.adresse.lot} - {client.adresse.code_postal} {client.adresse.ville}</li> : ''}
-                                {client.telephones.length > 0 ? <li className="small"><span className="fa-li"><span className="material-icons">phone</span></span><b>Téléphone</b>:<br /> {client.telephones.map(telephone => <span> <b>-</b> {telephone}<br /></span>)} </li> : ''}
+                                {client.telephones.length > 0 ? <li className="small"><span className="fa-li"><span className="material-icons">phone</span></span><b>Téléphone</b>:<br /> {client.telephones.map(telephone => <span key={telephone}> <b>-</b> {telephone}<br /></span>)} </li> : ''}
                             </ul>
                         </div>
                         <div className="col-4 text-center">
@@ -31,7 +29,7 @@ export default function ClientCard({ client, on_open_update_modal }) {
                                 action
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href="#!" onClick={on_open_update_modal}><span className="material-icons">update</span> modifier</Dropdown.Item>
+                                <Dropdown.Item href="#!" onClick={() => on_open_update_modal(client['_id'])}><span className="material-icons">update</span> modifier</Dropdown.Item>
                                 <Dropdown.Item href="#!"><span className="material-icons">delete_forever</span> supprimer</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>

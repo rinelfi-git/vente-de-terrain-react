@@ -7,6 +7,7 @@ import Pagination from "../statics/Pagination";
 import SearchCriteria from "./SearchCriteria";
 import UpdateClient from "./Update";
 import UpdateProfileImage from "./UpdateProfileImage";
+import axios from "axios";
 
 export default class Client extends Component {
     constructor(props) {
@@ -16,46 +17,41 @@ export default class Client extends Component {
                 insert: false,
                 update: false,
             },
-            clients: [
-                {
-                    "adresse": {
-                        "code_postal": 301,
-                        "ville": "Fianarantsoa"
-                    },
-                    "telephones": [],
-                    "_id": "62a73cc3644188ca269afebf",
-                    "cin": "201051014168",
-                    "nom": "Rijaniaina",
-                    "photo": "default.png",
-                    "terrains": [],
-                    "prenom": "Elie Fidèle"
-                }
-            ],
+            clients: [],
+            client: {adresse: {}, telephones: []},
             view_criteria: {
                 element_per_page: 1,
             }
         };
     }
 
-    handle_open_insert_modal = () => {
-        const {modal_shown} = this.state;
-        modal_shown['insert'] = true;
-        this.setState({modal_shown});
+    componentDidMount() {
+        this.update_view();
     }
 
-    open_update_modal = () => {
-        const {modal_shown} = this.state;
+    handle_open_insert_modal = () => {
+        const { modal_shown } = this.state;
+        modal_shown['insert'] = true;
+        this.setState({ modal_shown });
+    }
+
+    open_update_modal = async (id) => {
+        const { modal_shown } = this.state;
+        const {data} = await axios.get(`http://localhost:5000/client/${id}`);
+        this.setState({client: data});
         modal_shown['update'] = true;
-        this.setState({modal_shown});
+        this.setState({ modal_shown });
     }
 
     handle_close_modal = scope => {
-        const {modal_shown} = this.state;
+        const { modal_shown } = this.state;
         modal_shown[scope] = false;
-        this.setState({modal_shown});
+        this.setState({ modal_shown });
     }
 
-    update_view = page => {
+    update_view = async (page) => {
+        const { data } = await axios.get('http://localhost:5000/client');
+        this.setState({ clients: data });
     }
 
     render() {
@@ -79,15 +75,15 @@ export default class Client extends Component {
                 </div>
 
                 <SearchCriteria />
-                <InsertClient modal_shown={this.state.modal_shown['insert']} on_hide_modal={() => this.handle_close_modal('insert')} />
-                <UpdateClient modal_shown={this.state.modal_shown['update']} on_hide_modal={() => this.handle_close_modal('update')}  />
+                <InsertClient modal_shown={this.state.modal_shown['insert']} on_hide_modal={() => this.handle_close_modal('insert')} on_insertion_success={this.update_view}/>
+                <UpdateClient modal_shown={this.state.modal_shown['update']} on_hide_modal={() => this.handle_close_modal('update')} client={this.state.client} on_update_success={this.update_view}/>
                 <ConfirmDeleteClient />
                 <UpdateProfileImage />
 
                 <div className="content">
                     <div className="container">
                         <div className="row">
-                            {this.state.clients.map((client, index) => <ClientCard client={client} key={index} on_open_update_modal={this.open_update_modal} />)}
+                            {this.state.clients.map(client => <ClientCard client={client} key={client['_id']} on_open_update_modal={this.open_update_modal} />)}
                         </div>
                         <div className="row">
                             <div className="col-12">

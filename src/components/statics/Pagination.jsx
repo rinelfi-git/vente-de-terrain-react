@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 export default function Pagination({source, range: rage_from, on_page_update }) {
-    const [current, set_current] = useState(1);
-    const [end, set_end] = useState(5);
+    const [current] = useState(1);
+    const [end] = useState(5);
+    
     function range_from(min, max) {
         const range_from = [];
         for (let i = min; i <= max; i++) range_from.push(i);
