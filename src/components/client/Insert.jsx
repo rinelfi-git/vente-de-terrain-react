@@ -51,14 +51,14 @@ export default class InsertClient extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const {form} = this.state;
-        const client = {terrains: [], adresse: {}};
+        const { form } = this.state;
+        const client = { terrains: [], adresse: {} };
         ['cin', 'nom', 'prenom', 'telephones'].forEach(clef => client[clef] = form[clef]);
         ['ville', 'code_postal', 'lot'].forEach(clef => client['adresse'][clef] = form[clef]);
         try {
             await axios.put('http://localhost:5000/client', client);
             this.props.onInsertSuccess();
-        }catch(error) {
+        } catch (error) {
             alert('erreur');
         }
     }
@@ -93,11 +93,15 @@ export default class InsertClient extends Component {
                                 <label>Téléphone N° {key + 1}:<span className="text-danger">*</span></label>
                                 <div className="input-group">
                                     <input className="form-control" placeholder="03X XX XXX XX" type="text" maxLength="13" value={telephone} onChange={e => this.updateTelephones(key, e)} />
-                                    <div className="input-group-append">
-                                        <button type="button" className="btn btn-danger" onClick={() => this.deletePhoneAt(key)}>
-                                            <i className="fa fa-minus"></i>
-                                        </button>
-                                    </div>
+                                    {
+                                        form.telephones.length > 1 && (
+                                            <div className="input-group-append">
+                                                <button type="button" className="btn btn-danger" onClick={() => this.deletePhoneAt(key)}>
+                                                    <i className="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                                 <small className="form-text text-danger"></small>
                             </div>
@@ -111,21 +115,21 @@ export default class InsertClient extends Component {
                             <div className="col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label>ville:<span className="text-danger">*</span></label>
-                                    <input type="text" placeholder="ex: Fianarantsoa" className="form-control" name="ville"  value={form.ville} onChange={this.updateInput} />
+                                    <input type="text" placeholder="ex: Fianarantsoa" className="form-control" name="ville" value={form.ville} onChange={this.updateInput} />
                                     <small className="form-text text-danger"></small>
                                 </div>
                             </div>
                             <div className="col-md-6 col-sm-12">
                                 <div className="form-group">
                                     <label>code postal:<span className="text-danger">*</span></label>
-                                    <input type="number" placeholder="ex: 301" className="form-control" name="code_postal"  value={form.code_postal} onChange={this.updateInput} />
+                                    <input type="number" placeholder="ex: 301" className="form-control" name="code_postal" value={form.code_postal} onChange={this.updateInput} />
                                     <small className="form-text text-danger"></small>
                                 </div>
                             </div>
                         </div>
                         <div className="form-group">
                             <label>lot:</label>
-                            <textarea id="lot" rows="3" className="form-control" name="lot"  value={form.lot} onChange={this.updateInput} />
+                            <textarea id="lot" rows="3" className="form-control" name="lot" value={form.lot} onChange={this.updateInput} />
                             <small className="form-text text-danger"></small>
                         </div>
                     </Form>

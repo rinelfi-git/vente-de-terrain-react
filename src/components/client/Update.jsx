@@ -110,11 +110,15 @@ export default class UpdateClient extends Component {
                                 <label>Téléphone N° {key + 1}:<span className="text-danger">*</span></label>
                                 <div className="input-group">
                                     <input className="form-control" placeholder="03X XX XXX XX" type="text" maxLength="13" value={telephone} onChange={e => this.updateTelephones(key, e)} />
-                                    <div className="input-group-append">
-                                        <button type="button" className="btn btn-danger" onClick={() => this.deletePhoneAt(key)}>
-                                            <i className="fa fa-minus"></i>
-                                        </button>
-                                    </div>
+                                    {
+                                        form.telephones.length > 1 && (
+                                            <div className="input-group-append">
+                                                <button type="button" className="btn btn-danger" onClick={() => this.deletePhoneAt(key)}>
+                                                    <i className="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                                 <small className="form-text text-danger"></small>
                             </div>

@@ -13,6 +13,7 @@ export default function Pagination({source, range, onPageUpdate }) {
     function handleNavigationTo(target) {
         onPageUpdate(target);
     }
+    
     return (
         <>
             <li className={`page-item${current <= 1 && ' disabled'}`}>

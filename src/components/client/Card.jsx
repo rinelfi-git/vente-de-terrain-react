@@ -15,7 +15,7 @@ export default function ClientCard({ client, onUpdate, onDelete }) {
                             </ul>
                         </div>
                         <div className="col-4 text-center">
-                            <img src={`http://localhost:5000/uploads/images/clients/${client.photo}`} alt={client.nom} className="img-circle img-fluid" style={{ background: '#0069d9' }} />
+                            <img src={`http://localhost:5000/client/profile/${client.photo}`} alt={client.nom} className="img-circle img-fluid" style={{ background: '#0069d9' }} />
                             <div className="custom-class-image-edit-overlay custom-class-image-edit-overlay-background"></div>
                             <i className="fa fa-camera fa-2x text-white custom-class-icon-edit-overlay"></i>
                             <div className="custom-class-image-edit-overlay custom-class-image-edit-overlay-foreground" data-toggle="modal"></div>

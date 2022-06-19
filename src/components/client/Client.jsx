@@ -4,7 +4,7 @@ import ClientCard from "./Card";
 import ConfirmDeleteClient from "./ConfirmDelete";
 import InsertClient from "./Insert";
 import Pagination from "../statics/Pagination";
-import SearchCriteria from "./SearchCriteria";
+import SearchCriteria from "../statics/SearchCriteria";
 import UpdateClient from "./Update";
 import UpdateProfileImage from "./UpdateProfileImage";
 import axios from "axios";
@@ -75,7 +75,8 @@ export default class Client extends Component {
         this.updateView();
     }
 
-    updateView = async page => {
+    updateView = async (perPage, fieldName, orderField, orderDirection, searchInput) => {
+        console.log(perPage, fieldName, orderField, orderDirection, searchInput);
         try {
             const { data } = await axios.get('http://localhost:5000/client');
             this.setState({ clients: data });
@@ -104,7 +105,7 @@ export default class Client extends Component {
                     </div>
                 </div>
 
-                <SearchCriteria />
+                <SearchCriteria onPerformSearch={this.updateView} orderFields={[{key: 'cin', value: 'CIN'}, {key: 'nom', value: 'Nom et prénom'}, {key: 'adresse', value: 'Adresse'}]} />
                 <InsertClient modalShown={this.state.modalShown['insert']} onHideModal={() => this.handleCloseModal('insert')} onInsertionSuccess={this.handleInsertDone} />
                 <UpdateClient modalShown={this.state.modalShown['update']} onHideModal={() => this.handleCloseModal('update')} client={this.state.client} onUpdateSuccess={this.handleUpdateDone} />
                 <ConfirmDeleteClient modalShown={this.state.modalShown['delete']} onHideModal={() => this.handleCloseModal('delete')} client={this.state.client} onDeleteSuccess={this.handleDeleteDone}/>
