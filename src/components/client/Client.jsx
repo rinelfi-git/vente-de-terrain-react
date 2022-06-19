@@ -13,45 +13,75 @@ export default class Client extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal_shown: {
+            modalShown: {
                 insert: false,
                 update: false,
+                delete: false
             },
             clients: [],
-            client: {adresse: {}, telephones: []},
-            view_criteria: {
-                element_per_page: 1,
+            client: { adresse: {}, telephones: [] },
+            viewCriteria: {
+                elementPerPage: 1,
             }
         };
     }
 
     componentDidMount() {
-        this.update_view();
+        this.updateView();
     }
 
-    handle_open_insert_modal = () => {
-        const { modal_shown } = this.state;
-        modal_shown['insert'] = true;
-        this.setState({ modal_shown });
+    handleOpenInsertModal = () => {
+        const { modalShown } = this.state;
+        modalShown['insert'] = true;
+        this.setState({ modalShown });
     }
 
-    open_update_modal = async (id) => {
-        const { modal_shown } = this.state;
-        const {data} = await axios.get(`http://localhost:5000/client/${id}`);
-        this.setState({client: data});
-        modal_shown['update'] = true;
-        this.setState({ modal_shown });
+    handleOpenDeleteModal = client => {
+        const { modalShown } = this.state;
+        modalShown['delete'] = true;
+        this.setState({ modalShown, client });
     }
 
-    handle_close_modal = scope => {
-        const { modal_shown } = this.state;
-        modal_shown[scope] = false;
-        this.setState({ modal_shown });
+    handleOpenUpdateModal = client => {
+        const { modalShown } = this.state;
+        modalShown['update'] = true;
+        this.setState({ modalShown, client });
     }
 
-    update_view = async (page) => {
-        const { data } = await axios.get('http://localhost:5000/client');
-        this.setState({ clients: data });
+    handleCloseModal = scope => {
+        const { modalShown } = this.state;
+        modalShown[scope] = false;
+        this.setState({ modalShown });
+    }
+
+    handleUpdateDone = () => {
+        const { modalShown } = this.state;
+        modalShown['update'] = false;
+        this.setState({ modalShown });
+        this.updateView();
+    }
+
+    handleInsertDone = () => {
+        const { modalShown } = this.state;
+        modalShown['insert'] = false;
+        this.setState({ modalShown });
+        this.updateView();
+    }
+
+    handleDeleteDone = () => {
+        const { modalShown } = this.state;
+        modalShown['delete'] = false;
+        this.setState({ modalShown });
+        this.updateView();
+    }
+
+    updateView = async page => {
+        try {
+            const { data } = await axios.get('http://localhost:5000/client');
+            this.setState({ clients: data });
+        } catch (error) {
+            alert('erreur');
+        }
     }
 
     render() {
@@ -65,7 +95,7 @@ export default class Client extends Component {
                             </div>
                             <div className="col-sm-6">
                                 <div className="float-sm-right">
-                                    <Button variant="primary" onClick={this.handle_open_insert_modal}>
+                                    <Button variant="primary" onClick={this.handleOpenInsertModal}>
                                         <span className="material-icons">add</span> Nouveau
                                     </Button>
                                 </div>
@@ -75,20 +105,20 @@ export default class Client extends Component {
                 </div>
 
                 <SearchCriteria />
-                <InsertClient modal_shown={this.state.modal_shown['insert']} on_hide_modal={() => this.handle_close_modal('insert')} on_insertion_success={this.update_view}/>
-                <UpdateClient modal_shown={this.state.modal_shown['update']} on_hide_modal={() => this.handle_close_modal('update')} client={this.state.client} on_update_success={this.update_view}/>
-                <ConfirmDeleteClient />
+                <InsertClient modalShown={this.state.modalShown['insert']} onHideModal={() => this.handleCloseModal('insert')} onInsertionSuccess={this.handleInsertDone} />
+                <UpdateClient modalShown={this.state.modalShown['update']} onHideModal={() => this.handleCloseModal('update')} client={this.state.client} onUpdateSuccess={this.handleUpdateDone} />
+                <ConfirmDeleteClient modalShown={this.state.modalShown['delete']} onHideModal={() => this.handleCloseModal('delete')} client={this.state.client} onDeleteSuccess={this.handleDeleteDone}/>
                 <UpdateProfileImage />
 
                 <div className="content">
                     <div className="container">
                         <div className="row">
-                            {this.state.clients.map(client => <ClientCard client={client} key={client['_id']} on_open_update_modal={this.open_update_modal} />)}
+                            {this.state.clients.map(client => <ClientCard client={client} key={client['_id']} onUpdate={this.handleOpenUpdateModal} onDelete={this.handleOpenDeleteModal} />)}
                         </div>
                         <div className="row">
                             <div className="col-12">
                                 <ul className="pagination float-right" id="client-pagination">
-                                    <Pagination source={`http://localhost:5000/client/pagination`} range={5} on_page_update={this.update_view} />
+                                    <Pagination source={`http://localhost:5000/client/pagination`} range={5} onPageUpdate={this.updateView} />
                                 </ul>
                             </div>
                         </div>
