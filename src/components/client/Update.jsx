@@ -6,7 +6,6 @@ export default class UpdateClient extends Component {
 
     constructor(props) {
         super(props);
-        const { client } = this.props;
         this.state = {
             form: {
                 cin: '',
@@ -60,12 +59,23 @@ export default class UpdateClient extends Component {
         this.props.on_update_success();
     }
 
-    updateAndNotify = () => {
-        console.log('updtae performed');
+    componentDidUpdate(last_props, last_state) {
+        const {client} = this.props;
+        if(last_props.client !== client) {
+            this.setState({form: {
+                cin: client['cin'],
+                nom: client['nom'],
+                prenom: client['prenom'],
+                telephones: client['telephones'],
+                ville: client['adresse']['ville'],
+                code_postal: client['adresse']['code_postal'],
+                lot: client['adresse']['lot'],
+            }});
+            console.log('update');
+        }
     }
 
     render() {
-        const { client } = this.props;
         const { form } = this.state;
         return (
             <Modal show={this.props.modal_shown} onHide={this.props.on_hide_modal} centered scrollable={true}>
